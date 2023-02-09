@@ -1,0 +1,19 @@
+let s3_buckets = Resources.*[
+    Type == "AWS::S3::Bucket"
+]
+
+rule s3_bucket_versioning when %s3_buckets !empty {
+    %s3_buckets {
+        Properties {
+            VersioningConfiguration exists <<Bucket versioning is not configured (i.e. disabled).>>
+            when VersioningConfiguration exists {
+                VersioningConfiguration {
+                    Status exists <<Bucket versioning status is not configured (i.e. disabled).>>
+                    when Status exists {
+                        Status == "Enabled" <<Bucket versioning is not enabled.>>
+                    }
+                }
+            }
+        }
+    }
+}
