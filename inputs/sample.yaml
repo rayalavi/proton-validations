@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: S3 bucket with default encryption
+Resources:
+  EncryptedS3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      VersioningConfiguration:
+        Status: Enabled
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType:
