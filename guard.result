@@ -1,4 +1,0 @@
-sample.yaml Status = PASS
-PASS rules
-rule.guard/s3_bucket_versioning    PASS
----
