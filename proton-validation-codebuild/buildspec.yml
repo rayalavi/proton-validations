@@ -1,0 +1,15 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o rustup.sh
+      - chmod 755 rustup.sh
+      - ./rustup.sh -y
+      - source $HOME/.cargo/env
+      - cargo install cfn-guard
+  build:
+    commands:
+      - cfn-guard validate -d inputs/sample.yaml -r inputs/rule.guard --show-summary pass > guard.result
+  post_build:
+    commands:
+      - cat guard.result
